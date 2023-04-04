@@ -1,0 +1,90 @@
+#include <iostream>
+#include <chrono> // for measuring time
+using namespace std;
+using namespace std::chrono; // for measuring time
+
+
+const int MAX_SIZE = 100; // Maximum size of the stack
+
+class Stack {
+private:
+    int top; // Index of the top element of the stack
+    int items[MAX_SIZE]; // Array to store the stack elements
+public:
+    Stack() { // Constructor to initialize the stack
+        top = -1;
+    }
+    
+    void push(int item) { // Function to push an item onto the stack
+        if (top == MAX_SIZE-1) {
+            cout << "Stack overflow" << endl;
+            return;
+        }
+        top++;
+        items[top] = item;
+    }
+
+    int pop() { // Function to pop an item from the stack
+        if (top == -1) {
+            cout << "Stack underflow" << endl;
+            return -1;
+        }
+        int item = items[top];
+        top--;
+        return item;
+    }
+    
+    void display() { // Function to display the elements of the stack
+        if (top == -1) {
+            cout << "Stack empty" << endl;
+            return;
+        }
+        cout << "Stack elements: ";
+        for (int i = 0; i<top; i++) {
+            cout << items[i] << " ";
+        }
+        cout << endl;
+    }
+    
+};
+
+int main() {
+    Stack stack;
+    
+    auto start_display = high_resolution_clock::now();
+    
+    stack.push(8);
+    stack.push(10);
+    stack.push(5);
+    stack.push(11);
+    stack.push(15);
+    stack.push(23);
+    stack.push(6);
+    stack.push(18);
+    stack.push(20);
+    stack.push(17);
+    
+    stack.display();
+    
+    stack.pop();
+    stack.pop();
+    stack.pop();
+    stack.pop();
+    stack.pop();
+    
+    stack.display();
+    
+    stack.push(4);
+    stack.push(30);
+    stack.push(3);
+    stack.push(1);
+    
+    stack.display();
+    
+    auto stop_display = high_resolution_clock::now();
+    auto duration_display = duration_cast<microseconds>(stop_display - start_display);
+    cout << "Time taken: " << duration_display.count() << " microseconds" << endl;
+
+    
+    return 0;
+}
